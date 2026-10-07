@@ -1,68 +1,194 @@
-
 const lensVariables = {
-
   init: function () {
-
     this.selectOptions("type");
-  this.selectOptions("brand");
+    this.selectOptions("brand");
+    this.setSelectOptionARValue("variant-value", 27);
 
-  this.setSelectOptionARValue("variant-value", 27);
+    this.lensOptions();
+    this.closeLensModal();
+    this.modalActions();
 
-  this.toggleLens();
-
-  modalLens.init();
+    modalLens.init();
   },
 
   // ==========================================
-  // ABRIR / FECHAR LENTES DE GRAU
+  // OPÇÕES:
+  // ADICIONAR LENTES / APENAS ARMAÇÃO
   // ==========================================
 
-  toggleLens: function () {
+  lensOptions: function () {
+    const buttons = document.querySelectorAll(".lens-option");
 
-    const lensDetails = document.querySelector(
-      ".container-variant-lens .lens"
-    );
+    const modalOverlay = document.querySelector(".overlay-variant-lens");
 
-    if (!lensDetails) {
+    if (!buttons.length) {
       return;
     }
 
-    lensDetails.addEventListener("toggle", () => {
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const option = button.dataset.lensOption;
 
-      if (!lensDetails.open) {
+        // ========================================
+        // ADICIONAR LENTES
+        // ========================================
 
-        console.log("Lentes de grau desativadas");
+        if (option === "with-lens") {
+          // Se já está selecionado
+          // apenas reabre o modal
+          if (button.classList.contains("selected")) {
+            if (modalOverlay) {
+              modalOverlay.classList.add("modal-opened");
+            }
 
-        this.clearAllLens();
-      }
+            console.log("Modal de lentes reaberto");
+
+            return;
+          }
+
+          // Remove seleção dos outros
+          buttons.forEach((item) => {
+            item.classList.remove("selected");
+          });
+
+          // Seleciona adicionar lentes
+          button.classList.add("selected");
+
+          // Abre modal
+          if (modalOverlay) {
+            modalOverlay.classList.add("modal-opened");
+          }
+
+          console.log("Adicionar lentes selecionado");
+
+          return;
+        }
+
+        // ========================================
+        // COMPRAR APENAS ARMAÇÃO
+        // ========================================
+
+        if (option === "frame-only") {
+          // Remove seleção dos outros
+          buttons.forEach((item) => {
+            item.classList.remove("selected");
+          });
+
+          // Seleciona apenas armação
+          button.classList.add("selected");
+
+          // Fecha modal
+          if (modalOverlay) {
+            modalOverlay.classList.remove("modal-opened");
+          }
+
+          // Limpa todas as lentes
+          this.clearAllLens();
+
+          console.log("Comprar apenas armação selecionado");
+        }
+      });
     });
   },
 
   // ==========================================
-  // LIMPAR TUDO
+  // FECHAR MODAL
+  // ==========================================
+
+  closeLensModal: function () {
+    const modalOverlay = document.querySelector(".overlay-variant-lens");
+
+    const closeModal = document.querySelector(".close-modal-variant-lens");
+
+    if (!modalOverlay || !closeModal) {
+      return;
+    }
+
+    closeModal.addEventListener("click", () => {
+      /*
+       * IMPORTANTE:
+       *
+       * Aqui NÃO alteramos o botão selecionado.
+       *
+       * Se "Adicionar lentes" estiver selecionado,
+       * ele continuará selecionado.
+       *
+       * Também NÃO limpamos os inputs da Tray.
+       */
+
+      modalOverlay.classList.remove("modal-opened");
+
+      console.log("Modal de lentes fechado");
+    });
+  },
+  modalActions: function () {
+    const modalOverlay = document.querySelector(".overlay-variant-lens");
+
+    const clearButton = document.querySelector(".button-clear-lens");
+
+    const continueButton = document.querySelector(".button-continue-lens");
+
+    if (!modalOverlay) return;
+
+    // LIMPAR
+    if (clearButton) {
+      clearButton.addEventListener("click", () => {
+        this.clearAllLens();
+
+        console.log("Configuração de lentes limpa");
+      });
+    }
+
+    // CONTINUAR
+    if (continueButton) {
+      continueButton.addEventListener("click", () => {
+        modalOverlay.classList.remove("modal-opened");
+
+        console.log("Configuração de lentes confirmada");
+      });
+    }
+  },
+
+  // ==========================================
+  // LIMPAR TODAS AS LENTES
   // ==========================================
 
   clearAllLens: function () {
-
+    // Tipo
     this.resetSelected("type");
+
+    // Marca
     this.resetSelected("brand");
+
+    // AR
     this.resetSelected("variant-value");
+
+    // ========================================
+    // INPUTS DA TRAY
+    // ========================================
 
     this.clearInput(23);
     this.clearInput(25);
     this.clearInput(27);
+    this.clearInput(17);
 
-    document
-      .querySelectorAll(".ar-lens")
-      .forEach((details) => {
-        details.open = false;
-      });
+    // ========================================
+    // FECHAR AR
+    // ========================================
+
+    document.querySelectorAll(".ar-lens").forEach((details) => {
+      details.open = false;
+    });
+
+    // ========================================
+    // LIMPAR UPLOAD
+    // ========================================
 
     if (typeof window.clearLensUpload === "function") {
       window.clearLensUpload();
     }
 
-    console.log("Todas as opções foram limpas");
+    console.log("Todas as opções de lentes foram limpas");
   },
 
   // ==========================================
@@ -70,16 +196,13 @@ const lensVariables = {
   // ==========================================
 
   clearTypeLens: function () {
-
     this.resetSelected("type");
 
     this.clearInput(23);
 
-    // Se não existe tipo, não faz sentido
-    // manter marca e AR
     this.clearBrandLens();
 
-    console.log("Tipo limpo");
+    console.log("Tipo de lente limpo");
   },
 
   // ==========================================
@@ -87,16 +210,13 @@ const lensVariables = {
   // ==========================================
 
   clearBrandLens: function () {
-
     this.resetSelected("brand");
 
     this.clearInput(25);
 
-    // Se não existe marca, não faz sentido
-    // manter AR
     this.clearARLens();
 
-    console.log("Marca limpa");
+    console.log("Marca da lente limpa");
   },
 
   // ==========================================
@@ -104,16 +224,13 @@ const lensVariables = {
   // ==========================================
 
   clearARLens: function () {
-
     this.resetSelected("variant-value");
 
     this.clearInput(27);
 
-    document
-      .querySelectorAll(".ar-lens")
-      .forEach((details) => {
-        details.open = false;
-      });
+    document.querySelectorAll(".ar-lens").forEach((details) => {
+      details.open = false;
+    });
 
     console.log("AR limpo");
   },
@@ -123,10 +240,7 @@ const lensVariables = {
   // ==========================================
 
   clearInput: function (inputID) {
-
-    const input = document.querySelector(
-      `#infoAdicional_${inputID}`
-    );
+    const input = document.querySelector(`#infoAdicional_${inputID}`);
 
     if (!input) {
       return;
@@ -136,14 +250,14 @@ const lensVariables = {
 
     input.dispatchEvent(
       new Event("input", {
-        bubbles: true
-      })
+        bubbles: true,
+      }),
     );
 
     input.dispatchEvent(
       new Event("change", {
-        bubbles: true
-      })
+        bubbles: true,
+      }),
     );
   },
 
@@ -151,60 +265,151 @@ const lensVariables = {
   // TIPO / MARCA
   // ==========================================
 
-  
+  selectOptions: function (dataName) {
+    const optionLens = document.querySelectorAll(`li[data-${dataName}]`);
 
-  // ==========================================
-  // MARCA → ABRIR AR CORRESPONDENTE
-  // ==========================================
+    optionLens.forEach((option) => {
+      option.addEventListener("click", (e) => {
+        const currentOption = e.currentTarget;
 
-  
+        const alreadySelected = currentOption.classList.contains("selected");
+
+        // ====================================
+        // DESMARCAR
+        // ====================================
+
+        if (alreadySelected) {
+          currentOption.classList.remove("selected");
+
+          if (dataName === "type") {
+            this.clearTypeLens();
+          }
+
+          if (dataName === "brand") {
+            this.clearBrandLens();
+          }
+
+          return;
+        }
+
+        // ====================================
+        // SELECIONAR
+        // ====================================
+
+        this.resetSelected(dataName);
+
+        currentOption.classList.add("selected");
+
+        // ====================================
+        // TIPO DE LENTE
+        // ====================================
+
+        if (dataName === "type") {
+          const input = document.querySelector("#infoAdicional_23");
+
+          if (input) {
+            input.value = currentOption.dataset.type;
+
+            input.dispatchEvent(
+              new Event("input", {
+                bubbles: true,
+              }),
+            );
+
+            input.dispatchEvent(
+              new Event("change", {
+                bubbles: true,
+              }),
+            );
+
+            console.log("Tipo selecionado:", input.value);
+          }
+        }
+
+        // ====================================
+        // MARCA DA LENTE
+        // ====================================
+
+        if (dataName === "brand") {
+          const input = document.querySelector("#infoAdicional_25");
+
+          if (input) {
+            input.value = currentOption.dataset.brand;
+
+            input.dispatchEvent(
+              new Event("input", {
+                bubbles: true,
+              }),
+            );
+
+            input.dispatchEvent(
+              new Event("change", {
+                bubbles: true,
+              }),
+            );
+
+            console.log("Marca selecionada:", input.value);
+          }
+
+          // Limpa AR anterior
+          this.clearARLens();
+
+          // Marca selecionada
+          const brand = currentOption.dataset.brand;
+
+          // Procura AR correspondente
+          const arDetails = document.querySelector(
+            `details.ar-lens[data-brand="${brand}"]`,
+          );
+
+          if (arDetails) {
+            arDetails.open = true;
+
+            console.log("AR aberto para a marca:", brand);
+          } else {
+            console.warn("Nenhum AR encontrado para:", brand);
+          }
+        }
+      });
+    });
+  },
 
   // ==========================================
   // ANTIRREFLEXO
   // ==========================================
 
   setSelectOptionARValue: function (dataName, inputID) {
-
-    const optionsARLens = document.querySelectorAll(
-      `li[data-${dataName}]`
-    );
+    const optionsARLens = document.querySelectorAll(`li[data-${dataName}]`);
 
     optionsARLens.forEach((optionAR) => {
-
       optionAR.addEventListener("click", (e) => {
-
         const currentOption = e.currentTarget;
 
-        const select = document.querySelector(
-          `#infoAdicional_${inputID}`
-        );
+        const select = document.querySelector(`#infoAdicional_${inputID}`);
 
         if (!select) {
           return;
         }
 
-        // ======================================
+        // ====================================
         // DESMARCAR AR
-        // ======================================
+        // ====================================
 
-        if (
-          currentOption.classList.contains("selected")
-        ) {
-
+        if (currentOption.classList.contains("selected")) {
           currentOption.classList.remove("selected");
 
           select.value = "";
 
           select.dispatchEvent(
             new Event("input", {
-              bubbles: true
-            })
+              bubbles: true,
+            }),
           );
 
           select.dispatchEvent(
             new Event("change", {
-              bubbles: true
-            })
+              bubbles: true,
+            }),
           );
 
           console.log("AR desmarcado");
@@ -212,195 +417,33 @@ const lensVariables = {
           return;
         }
 
-        // ======================================
+        // ====================================
         // SELECIONAR AR
-        // ======================================
+        // ====================================
 
         this.resetSelected("variant-value");
 
         currentOption.classList.add("selected");
 
-        const valueSelected =
-          currentOption.dataset[
-            this.toCamelCase(dataName)
-          ];
+        const valueSelected = currentOption.dataset[this.toCamelCase(dataName)];
 
         select.value = valueSelected;
 
         select.dispatchEvent(
           new Event("input", {
-            bubbles: true
-          })
+            bubbles: true,
+          }),
         );
 
         select.dispatchEvent(
           new Event("change", {
-            bubbles: true
-          })
+            bubbles: true,
+          }),
         );
 
-        console.log(
-          "AR selecionado:",
-          valueSelected
-        );
+        console.log("AR selecionado:", valueSelected);
       });
     });
-  },
-
-  // ==========================================
-  // SELECIONAR / DESSELECIONAR TIPO E MARCA
-  // ==========================================
-
-  selectOptions: function (dataName) {
-
-    const optionLens = document.querySelectorAll(
-      `li[data-${dataName}]`
-    );
-  
-    optionLens.forEach((option) => {
-  
-      option.addEventListener("click", (e) => {
-  
-        const currentOption = e.currentTarget;
-  
-        const alreadySelected =
-          currentOption.classList.contains("selected");
-  
-        // ======================================
-        // DESMARCAR
-        // ======================================
-  
-        if (alreadySelected) {
-  
-          currentOption.classList.remove("selected");
-  
-          if (dataName === "type") {
-  
-            this.clearTypeLens();
-  
-          }
-  
-          if (dataName === "brand") {
-  
-            this.clearBrandLens();
-  
-          }
-  
-          return;
-        }
-  
-        // ======================================
-        // SELECIONAR
-        // ======================================
-  
-        this.resetSelected(dataName);
-  
-        currentOption.classList.add("selected");
-  
-  
-        // ======================================
-        // TIPO DE LENTE
-        // ======================================
-  
-        if (dataName === "type") {
-  
-          const input = document.querySelector(
-            "#infoAdicional_23"
-          );
-  
-          if (input) {
-  
-            input.value = currentOption.dataset.type;
-  
-            input.dispatchEvent(
-              new Event("input", {
-                bubbles: true
-              })
-            );
-  
-            input.dispatchEvent(
-              new Event("change", {
-                bubbles: true
-              })
-            );
-  
-            console.log(
-              "Tipo selecionado:",
-              input.value
-            );
-          }
-        }
-  
-  
-        // ======================================
-        // MARCA DA LENTE
-        // ======================================
-  
-        if (dataName === "brand") {
-  
-          const input = document.querySelector(
-            "#infoAdicional_25"
-          );
-  
-          if (input) {
-  
-            input.value = currentOption.dataset.brand;
-  
-            input.dispatchEvent(
-              new Event("input", {
-                bubbles: true
-              })
-            );
-  
-            input.dispatchEvent(
-              new Event("change", {
-                bubbles: true
-              })
-            );
-  
-            console.log(
-              "Marca selecionada:",
-              input.value
-            );
-          }
-  
-  
-          // Limpa o AR anterior
-          this.clearARLens();
-  
-  
-          // Pega a marca selecionada
-          const brand = currentOption.dataset.brand;
-  
-  
-          // Procura o AR correspondente
-          const arDetails = document.querySelector(
-            `details.ar-lens[data-brand="${brand}"]`
-          );
-  
-  
-          if (arDetails) {
-  
-            arDetails.open = true;
-  
-            console.log(
-              "AR aberto para a marca:",
-              brand
-            );
-  
-          } else {
-  
-            console.warn(
-              "Nenhum AR encontrado para:",
-              brand
-            );
-          }
-        }
-  
-      });
-  
-    });
-  
   },
 
   // ==========================================
@@ -408,13 +451,9 @@ const lensVariables = {
   // ==========================================
 
   resetSelected: function (dataName) {
-
-    const optionLens = document.querySelectorAll(
-      `li[data-${dataName}]`
-    );
+    const optionLens = document.querySelectorAll(`li[data-${dataName}]`);
 
     optionLens.forEach((element) => {
-
       element.classList.remove("selected");
     });
   },
@@ -424,91 +463,8 @@ const lensVariables = {
   // ==========================================
 
   toCamelCase: function (str) {
-
     return str
-      .replace(/[-_\s]+(.)?/g, (_, c) =>
-        c ? c.toUpperCase() : ""
-      )
-      .replace(/^(.)/, c =>
-        c.toLowerCase()
-      );
-  }
-
+      .replace(/[-_\s]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ""))
+      .replace(/^(.)/, (c) => c.toLowerCase());
+  },
 };
-
-
-const modalLens = {
-
-  init: function () {
-
-    this.toggleModal();
-    this.closeModal();
-  },
-
-  toggleModal: function () {
-
-    const modalOverlay = document.querySelector(
-      ".overlay-variant-lens"
-    );
-
-    document
-      .querySelectorAll(
-        ".options-brand-lens li .info"
-      )
-      .forEach((button) => {
-
-        button.addEventListener("click", (e) => {
-
-          modalOverlay.classList.add(
-            "modal-opened"
-          );
-
-          const modalLen =
-            e.currentTarget.getAttribute("id");
-
-          this.setInfoModel(modalLen);
-        });
-      });
-  },
-
-  closeModal: function () {
-
-    const button = document.querySelector(
-      ".close-modal-variant-lens"
-    );
-
-    if (!button) {
-      return;
-    }
-
-    button.addEventListener("click", () => {
-
-      const modal = document.querySelector(
-        ".modal-opened"
-      );
-
-      if (modal) {
-        modal.classList.remove(
-          "modal-opened"
-        );
-      }
-    });
-  },
-
-  setInfoModel: function (modalLen) {
-
-    const lens = infoLens.find(
-      (item) => item.model === modalLen
-    );
-
-    if (!lens) {
-      return;
-    }
-
-    document.querySelector(
-      ".title-len-option"
-    ).textContent = lens.name;
-  }
-
-};
-

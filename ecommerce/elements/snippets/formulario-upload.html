@@ -1,11 +1,19 @@
-{% set uploadType = '' %} {% if product.category_id in
-settings.ids_lentes_contato %} {% set uploadType = 'exame' %} {% elseif
-product.category_id in settings.ids_fotos_categorias %} {% set uploadType =
-'photo' %} {% elseif product.category_id in settings.ids_lentes_oftalmicas %} {%
-set uploadType = 'oftalmica' %} {% endif %}
+{% set uploadType = '' %}
 
-<div id="uploadContainer" data-type-form="{{uploadType}}">
-  <label for="images"><span></span></label>
+{% if product.category_id in settings.ids_lentes_contato %}
+  {% set uploadType = 'exame' %}
+{% elseif product.category_id in settings.ids_fotos_categorias %}
+  {% set uploadType = 'photo' %}
+{% elseif product.category_id in settings.ids_lentes_oftalmicas %}
+  {% set uploadType = 'oftalmica' %}
+{% endif %}
+
+<div id="uploadContainer" data-type-form="{{ uploadType }}">
+
+  <label for="images">
+    <span></span>
+  </label>
+
   <input
     class="hidden"
     type="file"
@@ -14,12 +22,20 @@ set uploadType = 'oftalmica' %} {% endif %}
     accept="image/*"
     multiple
   />
+
   <div id="preview"></div>
-  <button type="button" id="uploadButton"><span></span></button>
+
+  <button type="button" id="uploadButton">
+    <span></span>
+  </button>
+
   <p id="status"></p>
+
 </div>
+
 <script>
   (function () {
+
     const cloudName = "dnhfvgzyp";
     const uploadPreset = "public_upload";
 
@@ -27,7 +43,6 @@ set uploadType = 'oftalmica' %} {% endif %}
     const preview = document.getElementById("preview");
     const status = document.getElementById("status");
     const uploadButton = document.getElementById("uploadButton");
-
     const linksupdated = document.getElementById("infoAdicional_17");
 
     let files = [];
@@ -37,26 +52,32 @@ set uploadType = 'oftalmica' %} {% endif %}
     // ==========================================
 
     input.addEventListener("change", function () {
+
       const selectedFiles = Array.from(input.files);
 
       selectedFiles.forEach(function (file) {
+
         files.push({
           file: file,
           url: null,
         });
+
       });
 
       renderPreview();
     });
+
 
     // ==========================================
     // PREVIEW
     // ==========================================
 
     function renderPreview() {
+
       preview.innerHTML = "";
 
       files.forEach(function (item, index) {
+
         const container = document.createElement("div");
         container.classList.add("item");
 
@@ -67,23 +88,22 @@ set uploadType = 'oftalmica' %} {% endif %}
         const remove = document.createElement("button");
 
         img.src = URL.createObjectURL(item.file);
-
         img.width = 80;
-
         img.alt = item.file.name;
 
         name.textContent = item.file.name;
 
         remove.type = "button";
-
         remove.textContent = "Remover";
 
         remove.addEventListener("click", function () {
+
           files.splice(index, 1);
 
           renderPreview();
 
           updateLinksField();
+
         });
 
         const containerItem = document.createElement("div");
@@ -92,19 +112,27 @@ set uploadType = 'oftalmica' %} {% endif %}
 
         containerItem.appendChild(img);
         containerItem.appendChild(name);
+
         container.appendChild(remove);
 
         preview.appendChild(container);
+
       });
+
     }
+
 
     // ==========================================
     // ATUALIZAR CAMPO DA TRAY
     // ==========================================
 
     function updateLinksField() {
+
       if (!linksupdated) {
-        console.warn("Campo infoAdicional_17 não encontrado.");
+
+        console.warn(
+          "Campo infoAdicional_17 não encontrado."
+        );
 
         return;
       }
@@ -118,41 +146,97 @@ set uploadType = 'oftalmica' %} {% endif %}
       linksupdated.value = links.join("\n\n");
 
       // Notifica a Tray
-
       linksupdated.dispatchEvent(
         new Event("input", {
           bubbles: true,
-        }),
+        })
       );
 
       linksupdated.dispatchEvent(
         new Event("change", {
           bubbles: true,
-        }),
+        })
       );
 
-      console.log("Campo infoAdicional_17 atualizado:", linksupdated.value);
+      console.log(
+        "Campo infoAdicional_17 atualizado:",
+        linksupdated.value
+      );
     }
+
+
+    // ==========================================
+    // LIMPAR UPLOAD COMPLETAMENTE
+    // ==========================================
+
+    window.clearLensUpload = function () {
+
+      console.log("Limpando upload das imagens...");
+
+      // 1. Limpa a lista de arquivos
+      files = [];
+
+      // 2. Remove os itens do preview
+      preview.innerHTML = "";
+
+      // 3. Limpa o campo de input file
+      input.value = "";
+
+      // 4. Limpa mensagem de status
+      status.textContent = "";
+
+      // 5. Limpa o campo da Tray
+      if (linksupdated) {
+
+        linksupdated.value = "";
+
+        linksupdated.dispatchEvent(
+          new Event("input", {
+            bubbles: true,
+          })
+        );
+
+        linksupdated.dispatchEvent(
+          new Event("change", {
+            bubbles: true,
+          })
+        );
+
+      }
+
+      // 6. Reabilita o botão de upload
+      uploadButton.disabled = false;
+
+      console.log("Upload de imagens completamente limpo.");
+
+    };
+
 
     // ==========================================
     // BOTÃO ENVIAR
     // ==========================================
 
     uploadButton.addEventListener("click", async function () {
+
       console.log("Botão Enviar imagens clicado");
 
       if (files.length === 0) {
-        status.textContent = "Selecione pelo menos um arquivo.";
+
+        status.textContent =
+          "Selecione pelo menos um arquivo.";
 
         return;
       }
 
       uploadButton.disabled = true;
 
-      status.textContent = "Enviando arquivos...";
+      status.textContent =
+        "Enviando arquivos...";
 
       try {
+
         for (const item of files) {
+
           // Não envia novamente
           // imagens que já possuem URL
 
@@ -160,37 +244,60 @@ set uploadType = 'oftalmica' %} {% endif %}
             continue;
           }
 
-          console.log("Enviando:", item.file.name);
+          console.log(
+            "Enviando:",
+            item.file.name
+          );
 
           const formData = new FormData();
 
-          formData.append("file", item.file);
+          formData.append(
+            "file",
+            item.file
+          );
 
-          formData.append("upload_preset", uploadPreset);
+          formData.append(
+            "upload_preset",
+            uploadPreset
+          );
 
           const response = await fetch(
-            "https://api.cloudinary.com/v1_1/" + cloudName + "/upload",
+            "https://api.cloudinary.com/v1_1/" +
+            cloudName +
+            "/upload",
             {
               method: "POST",
               body: formData,
-            },
+            }
           );
 
           if (!response.ok) {
-            throw new Error("Falha ao enviar " + item.file.name);
+
+            throw new Error(
+              "Falha ao enviar " +
+              item.file.name
+            );
+
           }
 
           const data = await response.json();
 
-          console.log("Resposta Cloudinary:", data);
+          console.log(
+            "Resposta Cloudinary:",
+            data
+          );
 
           if (!data.secure_url) {
-            throw new Error("Cloudinary não retornou a URL.");
+
+            throw new Error(
+              "Cloudinary não retornou a URL."
+            );
+
           }
 
           // Guarda a URL no arquivo
-
           item.url = data.secure_url;
+
         }
 
         // ======================================
@@ -199,16 +306,31 @@ set uploadType = 'oftalmica' %} {% endif %}
 
         updateLinksField();
 
-        status.textContent = "Arquivos incluidos no pedido com sucesso";
+        status.textContent =
+          "Arquivos incluidos no pedido com sucesso";
 
-        console.log("UPLOAD FINALIZADO", files);
+        console.log(
+          "UPLOAD FINALIZADO",
+          files
+        );
+
       } catch (error) {
-        console.error("Erro no upload:", error);
 
-        status.textContent = "Ocorreu um erro durante o upload.";
+        console.error(
+          "Erro no upload:",
+          error
+        );
+
+        status.textContent =
+          "Ocorreu um erro durante o upload.";
+
       } finally {
+
         uploadButton.disabled = false;
+
       }
+
     });
+
   })();
 </script>
