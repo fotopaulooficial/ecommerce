@@ -1,0 +1,32 @@
+{% set brands = [] %}
+
+{% for i in 1..12 %}
+    {% set position = attribute(settings, 'brand_'~i~'_position') %}
+    {% set link = attribute(settings, 'brand_'~i~'_url') %}
+    {% set img = attribute(settings, 'brand_'~i~'_image') %}
+
+    {% if img %}
+
+        {% set brands = brands|merge([{ "position": position, "img": img, "link": link }]) %}
+
+    {% endif %}
+
+{% endfor %}
+
+{% if brands|length and settings.brands_active %}
+<div class="section-brands-list">
+  {% for i in 1..12 %}
+      {% set loopParent = loop.index %}
+      {% for list in brands %}
+          {% if list.position == loopParent %}
+          <a {{ list.link ? 'href="'~list.link~'"' }} class="item-brand-list">
+            <img class="" src="{{ asset(list.img) }}" alt="Brand">
+        </a>
+          {% endif %}
+      {% endfor %}
+  {% endfor %}
+</div>
+{% endif %}
+
+
+

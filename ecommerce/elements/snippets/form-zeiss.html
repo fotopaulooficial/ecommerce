@@ -1,0 +1,29 @@
+<section class="section-form-zeiss" id="zeissweek">
+  <div class="container">
+    <div class="thumb-form">
+      <img src="{{ asset('img/thumb-zeiss.png') }}" alt="Zeiss">
+    </div>
+    <div class="formulario">
+      <form action="" id="form-zeiss">
+        <input type="text" name="name" placeholder="Nome Completo" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="tel" name="phone" placeholder="Telefone" required>
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector('#form-zeiss');
+
+  form.addEventListener('submit', (e) => {
+
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    window.open(`https://wa.me/5511935018566?text=Nome: ${Object.fromEntries(formData).name}%0AEmail: ${Object.fromEntries(formData).email}%0ATelefone: ${Object.fromEntries(formData).phone}%0ACampanha: Semana Zeiss`, '_blank');
+
+    form.reset();
+  });
+</script>

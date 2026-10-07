@@ -1,0 +1,314 @@
+
+
+<div id="lens-variables-container" class="lens-variables-container hidden">
+  <ul class="lens-variables-buttons">
+    <li>
+      <button type="button" data-summary="type-lens-near">
+        <span>LENTES PARA PERTO</span>
+      </button>
+    </li>
+    <li>
+      <button type="button" data-summary="type-lens-far">
+        <span>LENTES PARA LONGE</span>
+      </button>
+    </li>
+  </ul>
+  <details class="type-lens" data-summary="type-lens-near">
+    <summary></summary>
+    <div class="content-details">
+      <h3>LENTES PARA PERTO</h3>
+
+      <div class="description-lens">
+        <p>
+          Durante o processo de fabricação, as lentes passam por um
+          <b>tratamento especial que reduz reflexos</b>,
+          <b>melhora a transparência</b> e
+          <b>protege seus olhos contra a luz azul (Blue UV)</b>. Além disso,
+          recebem <b>proteção extra contra riscos</b> e <b>manchas</b>,
+          garantindo mais durabilidade e facilidade na limpeza.
+        </p>
+      </div>
+
+      <div class="options">
+        <button
+          type="button"
+          class="lens-option"
+          data-value="23:321"
+          aria-pressed="false"
+        >
+          <div>
+            <div class="marker"></div>
+
+            <div class="title-variable">
+              <p>Visão Simples</p>
+
+              <span>
+                Para miopia ou hipermetropia
+                <b>+0.00</b> a <b>-5.00</b> | cilindro até <b>-2.50</b>
+              </span>
+            </div>
+          </div>
+
+          <span>+R$499,00</span>
+        </button>
+      </div>
+
+      <div class="options">
+        <button
+          type="button"
+          class="lens-option"
+          data-value="23:323"
+          aria-pressed="false"
+        >
+          <div>
+            <div class="marker"></div>
+
+            <div class="title-variable">
+              <p>Multifocal</p>
+
+              <span>
+                Para miopia ou hipermetropia
+                <b>+0.00</b> a <b>-5.00</b> | cilindro até <b>-2.50</b>
+              </span>
+            </div>
+          </div>
+
+          <span>+R$699,00</span>
+        </button>
+      </div>
+
+      <div class="options">
+        <button
+          type="button"
+          class="lens-option"
+          data-value="23:325"
+          aria-pressed="false"
+        >
+          <div>
+            <div class="marker"></div>
+
+            <div class="title-variable">
+              <p>Super Fina</p>
+
+              <span>
+                Para miopia ou hipermetropia
+                <b>+0.00</b> a <b>-5.00</b> | cilindro até <b>-2.50</b>
+              </span>
+            </div>
+          </div>
+
+          <span>+R$999,00</span>
+        </button>
+      </div>
+    </div>
+  </details>
+  <details class="type-lens" data-summary="type-lens-far">
+    <summary></summary>
+    <div class="content-details">
+      <h3>LENTES PARA LONGE</h3>
+
+      <div class="description-lens">
+        <p>
+          Durante o processo de fabricação, as lentes passam por um
+          <b>tratamento especial que reduz reflexos</b>,
+          <b>melhora a transparência</b> e
+          <b>protege seus olhos contra a luz azul (Blue UV)</b>. Além disso,
+          recebem <b>proteção extra contra riscos</b> e <b>manchas</b>,
+          garantindo mais durabilidade e facilidade na limpeza.
+        </p>
+      </div>
+
+      <div class="options">
+        <button
+          type="button"
+          class="lens-option"
+          data-value="23:321"
+          aria-pressed="false"
+        >
+          <div>
+            <div class="marker"></div>
+
+            <div class="title-variable">
+              <p>Visão Simples</p>
+
+              <span>
+                Para miopia ou hipermetropia
+                <b>+0.00</b> a <b>-5.00</b> | cilindro até <b>-2.50</b>
+              </span>
+            </div>
+          </div>
+
+          <span>+R$499,00</span>
+        </button>
+      </div>
+
+      <div class="options">
+        <button
+          type="button"
+          class="lens-option"
+          data-value="23:323"
+          aria-pressed="false"
+        >
+          <div>
+            <div class="marker"></div>
+
+            <div class="title-variable">
+              <p>Multifocal</p>
+
+              <span>
+                Para miopia ou hipermetropia
+                <b>+0.00</b> a <b>-5.00</b> | cilindro até <b>-2.50</b>
+              </span>
+            </div>
+          </div>
+
+          <span>+R$699,00</span>
+        </button>
+      </div>
+
+      <div class="options">
+        <button
+          type="button"
+          class="lens-option"
+          data-value="23:325"
+          aria-pressed="false"
+        >
+          <div>
+            <div class="marker"></div>
+
+            <div class="title-variable">
+              <p>Super Fina</p>
+
+              <span>
+                Para miopia ou hipermetropia
+                <b>+0.00</b> a <b>-5.00</b> | cilindro até <b>-2.50</b>
+              </span>
+            </div>
+          </div>
+
+          <span>+R$999,00</span>
+        </button>
+      </div>
+    </div>
+  </details>
+</div>
+
+<script src="{{ asset('js/lens-variables.js')    }}"></script>
+
+
+<script>
+  lensVariables.toggleDetailsLensVariables();
+
+  function startSelectLensVars() {
+    const detailsTypeLens = document.querySelector("details.type-lens");
+    const selectTypeLens = document.getElementById("infoAdicional_23");
+
+    if (!detailsTypeLens || !selectTypeLens) return;
+
+    // Impede que o evento seja registrado mais de uma vez
+    if (detailsTypeLens.dataset.lensInitialized === "true") {
+      return;
+    }
+
+    detailsTypeLens.dataset.lensInitialized = "true";
+
+    function updateUI(value) {
+      detailsTypeLens.querySelectorAll(".options").forEach((option) => {
+        const button = option.querySelector(".lens-option");
+
+        if (!button) return;
+
+        const isSelected = button.dataset.value === value;
+
+        option.classList.toggle("active", isSelected);
+        button.setAttribute("aria-pressed", String(isSelected));
+      });
+    }
+
+    detailsTypeLens.addEventListener("click", function (event) {
+      const button = event.target.closest(".lens-option");
+
+      if (!button || !detailsTypeLens.contains(button)) {
+        return;
+      }
+
+      const value = button.dataset.value;
+
+      if (!value) {
+        return;
+      }
+
+      // Atualiza o visual mesmo se já estiver selecionado
+      updateUI(value);
+
+      // Só dispara change se realmente houve alteração
+      if (selectTypeLens.value === value) {
+        return;
+      }
+
+      selectTypeLens.value = value;
+
+      selectTypeLens.dispatchEvent(
+        new Event("change", {
+          bubbles: true,
+        }),
+      );
+
+    });
+
+    // Sincroniza estado inicial
+    if (selectTypeLens.value) {
+      updateUI(selectTypeLens.value);
+    }
+  }
+
+  //toggle lens variables
+
+  (function () {
+    const box = document.getElementById("lens-variables-container");
+
+    if (!box) return;
+
+    function getLensField() {
+      const form = document.getElementById("form_comprar");
+
+      if (!form) return null;
+
+      return form.querySelector("#infoAdicional_23");
+    }
+
+    function applyVisibility() {
+      const lensField = getLensField();
+
+      box.classList.toggle("hidden", !lensField);
+
+      if (lensField) {
+        startSelectLensVars();
+        toggleLensVariables();
+      }
+    }
+
+    function start() {
+      applyVisibility();
+
+      const observer = new MutationObserver(function () {
+        applyVisibility();
+      });
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+      });
+
+      setTimeout(function () {
+        observer.disconnect();
+      }, 30000);
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", start);
+    } else {
+      start();
+    }
+  })();
+</script>

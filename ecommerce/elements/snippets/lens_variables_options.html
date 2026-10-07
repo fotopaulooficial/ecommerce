@@ -1,0 +1,121 @@
+<div class="overlay-variant-lens">
+  <div class="modal-variant-lens">
+    <div class="header-modal-variant-lens">
+      <div class="close-modal-variant-lens">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M18 6L6 18"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M6 6L18 18"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+      <div class="logo-brand-zeiss"></div>
+    </div>
+    <div class="content-infos-lens">
+      <h3 class="title-len-option"></h3>
+    </div>
+  </div>
+</div>
+
+<div class="container-variant-lens">
+  <details class="lens">
+    <summary class="summary-lens">
+      <span></span>Adicionar lentes de grau
+    </summary>
+    <div class="variants-lens">
+      <!-- DETAILS TYPE LENS -->
+      <details class="type-lens" open>
+        <summary><span>1</span>Escolha o tipo de lente</summary>
+        <ul class="options-type-lens">
+          <li data-type="Perto">Lente para perto</li>
+          <li data-type="Longe">Lente para longe</li>
+        </ul>
+      </details>
+
+      <!-- DETAILS BRAND LENS -->
+      <details class="brand-lens" open>
+        <summary><span>2</span>Escolha a marca da lente</summary>
+        <ul class="options-brand-lens">
+          <li data-brand="ZEISS CLEARVIEW 1.50">
+            Zeiss ClearView 1.50
+            <p>
+              Miopia ou Hipermetropia = <span>+4,00</span> até
+              <span>-4,00</span> | Cilíndrico até <span>-2,00</span>
+            </p>
+            <!-- <div class="info" id="zvc150">Saiba mais</div> -->
+          </li>
+          <li data-brand="ZEISS CLEARVIEW 1.67">
+            Zeiss ClearView 1.67
+            <p>
+              Miopia ou Hipermetropia = <span>+6,00</span> até
+              <span>-8,00</span> | Cilíndrico até <span>-2,00</span>
+            </p>
+            <!-- <div class="info" id="zvc167">Saiba mais</div> -->
+          </li>
+          <li data-brand="MAXXEE 1.56 BLUEUV">
+            Maxxee 1.56 BlueUV
+            <p>
+              Miopia ou Hipermetropia = <span>+3,00</span> até
+              <span>-3,00</span> | Cilíndrico até <span>-2,00</span>
+            </p>
+            <!-- <div class="info" id="mxx156">Saiba mais</div> -->
+          </li>
+        </ul>
+      </details>
+
+      <!-- DETAILS AR LENS -->
+      <!-- ZEISS CLEARVIEW 1.59  -->
+      <details class="ar-lens" data-brand="ZEISS CLEARVIEW 1.50" name="lens">
+        <summary class="hidden"></summary>
+        <p><span>3</span>Escolha o tipo de Antirreflexo</p>
+        <ul class="options-ar-lens">
+          <li data-variant-value="27:327">AR Comum <span>R$489,00</span></li>
+          <li data-variant-value="27:329">AR Premium <span>R$890,00</span></li>
+        </ul>
+      </details>
+
+      <!-- ZEISS CLEARVIEW 1.67  -->
+      <details class="ar-lens" data-brand="ZEISS CLEARVIEW 1.67" name="lens">
+        <summary class="hidden"></summary>
+        <p><span>3</span>Escolha o tipo de Antirreflexo</p>
+        <ul class="options-ar-lens">
+          <li data-variant-value="27:331">AR Comum <span>R$1.519,00</span></li>
+          <li data-variant-value="27:333">
+            AR Premium <span>R$1.718,00</span>
+          </li>
+        </ul>
+      </details>
+
+      <!-- MAXXEE 1.56 BLUEUV  -->
+      <details class="ar-lens" data-brand="MAXXEE 1.56 BLUEUV" name="lens">
+        <summary class="hidden"></summary>
+        <p><span>3</span>Escolha o tipo de Antirreflexo</p>
+        <ul class="options-ar-lens">
+          <li data-variant-value="27:335">AR Comum <span>R$378,00</span></li>
+        </ul>
+      </details>
+      {% element 'snippets/formulario-upload' %}
+    </div>
+  </details>
+</div>
+
+<script src="{{ asset('js/lens-variables.js')    }}"></script>
+<script>
+  lensVariables.init();
+</script>

@@ -1,0 +1,60 @@
+<div class="variants-steps">
+  <div class="top-steps">
+    <span class="" data-step="1">Tipo</span>
+    <span class="disabled" data-step="2">Espessura</span>
+    <span class="disabled" data-step="3">Lente</span>
+  </div>
+  <div class="container-steps">
+    <div class="step disabled" data-step="1">
+      <p>Selecione o tipo de lente</p>
+    </div>
+    <div class="step disabled" data-step="2">
+      <p>Selecione a espessura da lente</p>
+    </div>
+    <div class="step disabled" data-step="3">
+      <p>Selecione a lente</p>
+    </div>
+  </div>
+  <div class="container-buttons">
+    <button class="prev">Anterior</button>
+    <button class="next">Próximo</button>
+  </div>
+</div>
+
+<script>
+
+const stepElements = document.querySelectorAll('[data-step]');
+const stepsTabs = document.querySelectorAll('.top-steps > span');
+const prevBtn = document.querySelector('.container-buttons .prev');
+const nextBtn = document.querySelector('.container-buttons .next');
+
+const totalSteps = stepsTabs.length;
+let currentStep = 1;
+
+function showStep(step) {
+  // Limita o valor do passo dentro do intervalo válido [1, totalSteps]
+  currentStep = Math.max(1, Math.min(step, totalSteps));
+
+  // Otimiza a alternância da classe 'disabled' em um único loop
+  stepElements.forEach(element => {
+    const isCurrentStep = Number(element.dataset.step) === currentStep;
+    element.classList.toggle('disabled', !isCurrentStep);
+  });
+}
+
+// Event Listeners
+stepsTabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    const step = Number(tab.dataset.step);
+    if (!isNaN(step)) showStep(step);
+  });
+});
+
+// Encadeamento opcional (?.) para evitar exceção se o botão não existir
+prevBtn?.addEventListener('click', () => showStep(currentStep - 1));
+nextBtn?.addEventListener('click', () => showStep(currentStep + 1));
+
+// Inicialização
+showStep(currentStep);
+
+</script>

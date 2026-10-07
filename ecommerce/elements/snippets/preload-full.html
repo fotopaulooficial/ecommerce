@@ -1,0 +1,55 @@
+{% set preloadHero = '' %}
+
+{# Prioriza o mesmo banner renderizado em banner-home.html #}
+{% if banners.extra1 and utils.is_mobile %}
+    {% if banners.extra1.type == 'image' and banners.extra1.src %}
+        {% set preloadHero = banners.extra1.src %}
+    {% elseif banners.extra1.type != 'image' and banners.extra1.slides|length %}
+        {% set preloadHero = banners.extra1.slides[0].image %}
+    {% endif %}
+{% else %}
+    {% if banners.home.type == 'image' and banners.home.src %}
+        {% set preloadHero = banners.home.src %}
+    {% elseif banners.home.type != 'image' and banners.home.slides|length %}
+        {% set preloadHero = banners.home.slides[0].image %}
+    {% endif %}
+{% endif %}
+
+{# Fallback para configuração antiga do tema #}
+{% if preloadHero == '' %}
+    {% set listDesk = [] %}
+    {% for i in 1..6 %}
+        {% set src = attribute(settings, 'banner_full_'~i~'_image') %}
+        {% set position = attribute(settings, 'banner_full_'~i~'_position') %}
+        {% set status = attribute(settings, 'banner_full_'~i~'_status') %}
+
+        {% if src != '' and status %}
+            {% set listDesk = listDesk|merge([{ "src": src, "position": position }]) %}
+        {% endif %}
+    {% endfor %}
+
+    {% set listMob = [] %}
+    {% for i in 1..6 %}
+        {% set src = attribute(settings, 'banner_full_mobile_'~i~'_image') %}
+        {% set position = attribute(settings, 'banner_full_mobile_'~i~'_position') %}
+        {% set status = attribute(settings, 'banner_full_mobile_'~i~'_status') %}
+
+        {% if src != '' and status %}
+            {% set listMob = listMob|merge([{ "src": src, "position": position }]) %}
+        {% endif %}
+    {% endfor %}
+
+    {% if listMob|length and utils.is_mobile %}
+        {% set listDesk = listMob %}
+    {% endif %}
+
+    {% for list in listDesk %}
+        {% if list.position == 1 and preloadHero == '' %}
+            {% set preloadHero = asset(list.src) %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% if preloadHero %}
+    <link rel="preload" href="{{ preloadHero }}" as="image" fetchpriority="high">
+{% endif %}

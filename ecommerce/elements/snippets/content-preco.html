@@ -1,0 +1,9 @@
+<div class="box-price">
+  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eius, cum.
+  {% if product.available and (product.stock > 0 or settings.without_stock_sale) and not product.upon_request %}
+      <div class="product-payment">
+          {{ product.payment }}
+      </div>
+  {% endif %}
+  <div class="price">{% element 'snippets/price' {"product": product} %}</div>
+</div>

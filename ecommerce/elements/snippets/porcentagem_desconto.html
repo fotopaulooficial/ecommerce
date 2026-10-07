@@ -1,0 +1,11 @@
+{% set discount = product.price_offer > 0 ? (100 - (product.price_offer / product.price) * 100) : false %}
+
+{% if discount %}
+	<span class="porcentagem">
+    {% if product.has_variation and product.has_other_prices %}
+	    Aproveite este produto está com at&eacute; {{ discount | number_format }}% de desconto.        
+    {% else %}  
+	    Aproveite este produto está com {{ discount | number_format }}% de desconto.	    
+   {% endif %} 
+   </span>
+{% endif %}

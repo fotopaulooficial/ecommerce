@@ -1,0 +1,29 @@
+<div class="comentarios">
+  <h1>comentarios</h1>
+  {% if product.comments %}
+  <div class="product-reviews">
+    <h2>Avaliações dos Clientes</h2>
+
+    {% for comment in product.comments %}
+    <div class="review-item">
+      <div class="review-header">
+        <strong>{{ comment.customer.name }}</strong>
+        <span>{{ comment.date }}</span>
+      </div>
+
+      <div class="review-rating">
+        Nota: {{ comment.rating }}/5
+      </div>
+
+      {% if comment.title %}
+      <h3>{{ comment.title }}</h3>
+      {% endif %}
+
+      {% if comment.comment %}
+      <p>{{ comment.comment }}</p>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>

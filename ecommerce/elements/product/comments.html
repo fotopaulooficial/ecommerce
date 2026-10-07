@@ -1,0 +1,42 @@
+<div class="comments-area">
+
+  {% if product.comments %}
+
+      {% for comment in product.comments %}
+
+          <div class="comment">
+
+              <strong>
+                  {{ comment.customer.name }}
+              </strong>
+
+              <div>
+                  {% for i in 1..5 %}
+                      {% if i <= comment.rating %}
+                          ★
+                      {% else %}
+                          ☆
+                      {% endif %}
+                  {% endfor %}
+              </div>
+
+              <p>
+                  {{ comment.comment }}
+              </p>
+
+          </div>
+
+      {% endfor %}
+
+  {% endif %}
+
+
+  <div class="comment-form">
+
+      <h3>Avalie este produto!</h3>
+
+      {{ productHelper.comments() }}
+
+  </div>
+
+</div>
