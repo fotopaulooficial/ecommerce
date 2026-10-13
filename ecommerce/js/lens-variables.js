@@ -7,8 +7,6 @@ const lensVariables = {
     this.lensOptions();
     this.closeLensModal();
     this.modalActions();
-
-    modalLens.init();
   },
 
   // ==========================================

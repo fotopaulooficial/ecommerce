@@ -13669,7 +13669,7 @@ div[class~="14a7e59ed27d1642ea26488a8dc287ae"],
       gap: 0.3rem;
       text-transform: uppercase;
       font-weight: 500;
-      color: rgb(71, 85, 105);
+      color: rgb(25, 51, 117);
       > span {
         width: 25px;
         height: 25px;
@@ -13691,9 +13691,11 @@ details.brand-lens {
       font-size: 1rem;
       font-weight: 600;
       text-align: left;
+      color: $azul;
       p {
         font-size: 0.8rem;
         font-weight: 400;
+        color: rgb(71, 85, 105);;
       }
     }
   }
@@ -13924,11 +13926,21 @@ div[data-type-form="photo"] {
   }
 }
 
+.options-type-lens {
+  li {
+    font-weight: 400;
+    span {
+      font-weight: 700;
+      color: $azul;
+    }
+  }
+}
 
 .lens-options {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  margin-bottom: 1rem;
 }
 
 .lens-option {
@@ -14020,4 +14032,31 @@ div[data-type-form="photo"] {
 
 .footer-modal-variant-lens button:hover {
   opacity: 0.85;
+}
+
+#preco {
+  #produto_preco {
+    #info_preco {
+      margin-bottom: 1rem;
+    }
+    #detalhes_formas {
+      &::before {
+        margin-bottom: 1rem!important;
+        display: block;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-variant-lens {
+    max-width: 85vw;
+  }
+  div[data-type-form='oftalmica'] #uploadButton:before {
+    padding-left: 0!important;
+  }
+
+  .footer-modal-variant-lens {
+    padding: 1rem 0!important;
+  }
 }

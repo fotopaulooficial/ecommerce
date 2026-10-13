@@ -33,11 +33,11 @@
         <details class="type-lens" open>
           <summary><span>1</span>Escolha o tipo de lente</summary>
           <ul class="options-type-lens">
-            <li data-type="Perto">Lente para perto</li>
-            <li data-type="Longe">Lente para longe</li>
+            <li data-type="Perto">Lente para <span>PERTO</span></li>
+            <li data-type="Longe">Lente para <span>LONGE</span></li>
           </ul>
         </details>
-  
+
         <!-- DETAILS BRAND LENS -->
         <details class="brand-lens" open>
           <summary><span>2</span>Escolha a marca da lente</summary>
@@ -68,71 +68,57 @@
             </li>
           </ul>
         </details>
-  
+
         <!-- DETAILS AR LENS -->
         <!-- ZEISS CLEARVIEW 1.59  -->
         <details class="ar-lens" data-brand="ZEISS CLEARVIEW 1.50" name="lens">
           <summary class="hidden"></summary>
           <p><span>3</span>Escolha o tipo de Antirreflexo</p>
           <ul class="options-ar-lens">
-            <li data-variant-value="27:327">AR Comum <span>R$489,00</span></li>
-            <li data-variant-value="27:329">AR Premium <span>R$890,00</span></li>
+            <li data-variant-value="27:327">AR Comum - <span>R$489,00</span></li>
+            <li data-variant-value="27:329">
+              AR Premium - <span>R$890,00</span>
+            </li>
           </ul>
         </details>
-  
+
         <!-- ZEISS CLEARVIEW 1.67  -->
         <details class="ar-lens" data-brand="ZEISS CLEARVIEW 1.67" name="lens">
           <summary class="hidden"></summary>
           <p><span>3</span>Escolha o tipo de Antirreflexo</p>
           <ul class="options-ar-lens">
-            <li data-variant-value="27:331">AR Comum <span>R$1.519,00</span></li>
+            <li data-variant-value="27:331">
+              AR Comum - <span>R$1.519,00</span>
+            </li>
             <li data-variant-value="27:333">
-              AR Premium <span>R$1.718,00</span>
+              AR Premium - <span>R$1.718,00</span>
             </li>
           </ul>
         </details>
-  
+
         <!-- MAXXEE 1.56 BLUEUV  -->
         <details class="ar-lens" data-brand="MAXXEE 1.56 BLUEUV" name="lens">
           <summary class="hidden"></summary>
           <p><span>3</span>Escolha o tipo de Antirreflexo</p>
           <ul class="options-ar-lens">
-            <li data-variant-value="27:335">AR Comum <span>R$378,00</span></li>
+            <li data-variant-value="27:335">AR Comum - <span>R$378,00</span></li>
           </ul>
         </details>
         {% element 'snippets/formulario-upload' %}
         <div class="footer-modal-variant-lens">
-          <button
-            type="button"
-            class="button-clear-lens"
-          >
-            LIMPAR
-          </button>
-        
-          <button
-            type="button"
-            class="button-continue-lens"
-          >
-            CONTINUAR
-          </button>
+          <button type="button" class="button-clear-lens">LIMPAR</button>
+
+          <button type="button" class="button-continue-lens">CONTINUAR</button>
         </div>
       </div>
-      
     </div>
-    
   </div>
 </div>
 
-<div class="container-variant-lens">
-
+<div class="container-variant-lens hidden" id="container-variant-lens">
   <div class="lens-options">
-
     <!-- ADICIONAR LENTES -->
-    <button
-      type="button"
-      class="lens-option"
-      data-lens-option="with-lens"
-    >
+    <button type="button" class="lens-option" data-lens-option="with-lens">
       <span class="lens-option-radio"></span>
 
       <span class="lens-option-content">
@@ -141,13 +127,8 @@
       </span>
     </button>
 
-
     <!-- APENAS ARMAÇÃO -->
-    <button
-      type="button"
-      class="lens-option"
-      data-lens-option="frame-only"
-    >
+    <button type="button" class="lens-option" data-lens-option="frame-only">
       <span class="lens-option-radio"></span>
 
       <span class="lens-option-content">
@@ -155,8 +136,9 @@
         <small>Sem lentes de grau</small>
       </span>
     </button>
-
   </div>
+</div>
+
 <script src="{{ asset('js/lens-variables.js')    }}"></script>
 <script>
   lensVariables.init();

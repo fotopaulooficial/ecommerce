@@ -1351,6 +1351,19 @@
 </style>
 
 <script>
+
+  function checkVariantLens () {
+    const box = document.getElementById("container-variant-lens");
+    const form = document.getElementById("form_comprar");
+    if (!box || !form) return;
+
+    const hasLensField = [23, 25, 27].some((id) =>
+      form.querySelector("#infoAdicional_" + id)
+    );
+    box.classList.toggle("hidden", !hasLensField);
+    console.log('check variants')
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
 
     // 1. Função para capturar Título e Campo pelo texto do Título
@@ -1444,5 +1457,7 @@
     });
 
     atualizarSoma();
+    checkVariantLens ();
   });
 </script>
+
