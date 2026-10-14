@@ -13669,7 +13669,7 @@ div[class~="14a7e59ed27d1642ea26488a8dc287ae"],
       gap: 0.3rem;
       text-transform: uppercase;
       font-weight: 500;
-      color: rgb(71, 85, 105);
+      color: rgb(25, 51, 117);
       > span {
         width: 25px;
         height: 25px;
@@ -13691,59 +13691,17 @@ details.brand-lens {
       font-size: 1rem;
       font-weight: 600;
       text-align: left;
+      color: $azul;
       p {
         font-size: 0.8rem;
         font-weight: 400;
+        color: rgb(71, 85, 105);;
       }
     }
   }
 }
 
-.overlay-variant-lens {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  display: none;
-}
-.modal-variant-lens {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 40rem;
-  height: 100vh;
-  background-color: rgba(255, 255, 255, 1);
-  z-index: 1000;
-}
-.header-modal-variant-lens {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  .close-modal-variant-lens {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 1rem;
-    svg {
-      width: 24px;
-      height: 24px;
-    }
-  }
-  .logo-brand-zeiss {
-    width: 100px;
-    height: 100px;
-    background: rgb(233, 233, 233) url("../img/zeiss_logo.svg") center center
-      no-repeat;
-    background-size: contain;
-  }
-}
+
 
 // FORM OFTALMICAS
 #uploadContainer {
@@ -13839,6 +13797,16 @@ details.brand-lens {
       background: $azul-claro;
     }
   }
+  p#status {
+    padding: .5rem 0;
+    text-align: center;
+  }
+  p.danger {
+    color: red;
+  }
+  p.success {
+    color: green;
+  }
 }
 
 div[data-type-form="oftalmica"] {
@@ -13886,5 +13854,219 @@ div[data-type-form="photo"] {
     &:before {
       content: "Incluir fotos no pedido";
     }
+  }
+}
+
+.overlay-variant-lens {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+
+  /* Fechado por padrão */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Modal aberto */
+.overlay-variant-lens.modal-opened {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.modal-variant-lens {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 40rem;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 1);
+  z-index: 1000;
+
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+
+  .content-infos-lens {
+    .variants-lens {
+      max-height: calc(100vh - 60px);
+      overflow-y: scroll;
+    }
+  }
+}
+
+/* Modal desliza para dentro */
+.overlay-variant-lens.modal-opened .modal-variant-lens {
+  transform: translateX(0);
+}
+
+.header-modal-variant-lens {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+  .close-modal-variant-lens {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 1rem;
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .logo-brand-zeiss {
+    width: 100px;
+    height: 100px;
+    background: rgb(233, 233, 233)
+      url("../img/zeiss_logo.svg")
+      center center no-repeat;
+    background-size: contain;
+  }
+}
+
+.options-type-lens {
+  li {
+    font-weight: 400;
+    span {
+      font-weight: 700;
+      color: $azul;
+    }
+  }
+}
+
+.lens-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.lens-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+}
+
+.lens-option-radio {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  border: 2px solid #999;
+  border-radius: 50%;
+  position: relative;
+}
+
+.lens-option.selected {
+  border-color: #000;
+}
+
+.lens-option.selected .lens-option-radio {
+  border-color: #000;
+}
+
+.lens-option.selected .lens-option-radio::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #000;
+}
+
+.lens-option-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.lens-option-content strong {
+  font-size: 1rem;
+}
+
+.lens-option-content small {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.footer-modal-variant-lens {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background: #fff;
+}
+
+.footer-modal-variant-lens button {
+  flex: 1;
+  min-height: 48px;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.button-clear-lens {
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #222;
+}
+
+.button-continue-lens {
+  border: 1px solid #000;
+  background: #000;
+  color: #fff;
+}
+
+.footer-modal-variant-lens button:hover {
+  opacity: 0.85;
+}
+
+#preco {
+  #produto_preco {
+    #info_preco {
+      margin-bottom: 1rem;
+    }
+    #detalhes_formas {
+      &::before {
+        margin-bottom: 1rem!important;
+        display: block;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-variant-lens {
+    max-width: 85vw;
+  }
+  div[data-type-form='oftalmica'] #uploadButton:before {
+    padding-left: 0!important;
+  }
+
+  .footer-modal-variant-lens {
+    padding: 1rem 0!important;
   }
 }
