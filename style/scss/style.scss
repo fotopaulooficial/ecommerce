@@ -13797,6 +13797,16 @@ details.brand-lens {
       background: $azul-claro;
     }
   }
+  p#status {
+    padding: .5rem 0;
+    text-align: center;
+  }
+  p.danger {
+    color: red;
+  }
+  p.success {
+    color: green;
+  }
 }
 
 div[data-type-form="oftalmica"] {

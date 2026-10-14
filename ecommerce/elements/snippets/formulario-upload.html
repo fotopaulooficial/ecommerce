@@ -219,9 +219,10 @@
     uploadButton.addEventListener("click", async function () {
 
       console.log("Botão Enviar imagens clicado");
+      
 
       if (files.length === 0) {
-
+        status.classList.add('danger');
         status.textContent =
           "Selecione pelo menos um arquivo.";
 
@@ -308,6 +309,7 @@
 
         status.textContent =
           "Arquivos incluidos no pedido com sucesso";
+          status.classList.add('success');  
 
         console.log(
           "UPLOAD FINALIZADO",
