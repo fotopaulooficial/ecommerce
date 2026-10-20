@@ -1,4 +1,4 @@
-<ul class="payment-list flex f-wrap">
+<!-- <ul class="payment-list flex f-wrap">
 {% if paymentMethods.credit|length %}
     {% for payment in paymentMethods.credit %}
         <li class="payment-form">
@@ -15,4 +15,28 @@
         </li>
     {% endfor %}
 {% endif %}
+</ul> -->
+
+<ul class="payment-list flex f-wrap">
+  <li class="payment-form">
+    <img
+      class="lazyload"
+      src="{{asset('img/ma_symbol.svg')}}"
+      alt="MasterCard"
+    />
+  </li>
+  <li class="payment-form">
+    <img
+      class="lazyload"
+      src="{{asset('img/visa_icon.svg')}}"
+      alt="Visa"
+    />
+  </li>
+  <li class="payment-form pix_icon">
+    <img
+      class="lazyload"
+      src="{{asset('img/icon_pix.svg')}}"
+      alt="Visa"
+    />
+  </li>
 </ul>
