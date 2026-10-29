@@ -14058,6 +14058,58 @@ div[data-type-form="photo"] {
   }
 }
 
+// FOOTER
+footer {
+  .social {
+    a {
+      &:hover {
+        .dot {
+          background-color: #ffffff;
+        }
+        &::after {
+          color: #ffffff!important;
+        }
+      }
+    }
+  }
+  .box {
+    a {
+      &:hover {
+        color: #FFF;
+        text-decoration: underline;
+      }
+    }
+  }
+  ul.list {
+    a {
+      &:hover {
+        color: #FFF;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+.payment-list {
+  background: #FFF;
+  li {
+    padding: .2rem;
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+  li.pix_icon {
+    width: 100px!important;
+
+  }
+}
+
+
+
 @media (max-width: 768px) {
   .modal-variant-lens {
     max-width: 85vw;
